@@ -1,0 +1,16 @@
+# Fichier de suivi des notifications envoyées - Exemple
+# ============================================
+# Ce fichier est généré automatiquement par l'application
+# pour éviter d'envoyer plusieurs notifications pour la même mise à jour.
+# 
+# Format:
+# last_notifications:
+#   <container_id>:
+#     image: "nom_de_l_image"
+#     last_notified: <timestamp>
+#     version: "nouvelle_version"
+#
+# Ne pas modifier manuellement ce fichier.
+# Il est automatiquement mis à jour par l'application.
+
+last_notifications: {}

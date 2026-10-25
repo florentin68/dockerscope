@@ -1,0 +1,80 @@
+# =============================================================================
+# Docker Services Updater - Configuration
+# =============================================================================
+#
+# MODES DE FONCTIONNEMENT:
+# 1. Mode Docker local: Monte le socket Docker pour accéder à Docker Engine
+# 2. Mode Portainer: Utilise l'API Portainer (PORTAINER_URL + PORTAINER_API_KEY requis)
+# 3. Mode Hybride: Les deux méthodes sont utilisées
+#
+# Pour le MODE PORTTAINER SEUL (sans démon Docker local):
+# - Configurez PORTAINER_URL et PORTAINER_API_KEY dans le fichier .env
+# - Le volume /var/run/docker.sock n'est pas nécessaire
+# - L'application utilisera uniquement l'API Portainer
+#
+# Pour le MODE DOCKER LOCAL:
+# - Montez le socket Docker (déjà configuré ci-dessous)
+# - Pas besoin de configurer Portainer
+#
+# Pour le MODE HYBRIDE (recommandé):
+# - Montez le socket Docker
+# - Configurez PORTAINER_URL et PORTAINER_API_KEY
+#
+# =============================================================================
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      # Socket Docker - Optionnel pour le mode Docker local
+      # Pour le mode Portainer SEUL, ce volume peut être supprimé
+      # mais il est gardé par défaut pour la compatibilité
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Configuration centrale (format YAML supporté : config.yml, config.example.yml)
+      # L'application charge config.yml en priorité, puis config.json pour rétrocompatibilité
+      - ./config:/app/config:ro
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      # Authentification Docker Hub (optionnel - évite les limites de rate)
+      - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME:-}
+      - DOCKERHUB_PASSWORD=${DOCKERHUB_PASSWORD:-}
+      - DOCKERHUB_TOKEN=${DOCKERHUB_TOKEN:-}
+      # Tokens pour autres registries (optionnels - pour les images privées)
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - GITLAB_TOKEN=${GITLAB_TOKEN:-}
+      - QUAY_TOKEN=${QUAY_TOKEN:-}
+      # Configuration des notifications
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN:-}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-}
+      - GOTIFY_URL=${GOTIFY_URL:-}
+      - GOTIFY_TOKEN=${GOTIFY_TOKEN:-}
+      # Configuration Portainer (optionnel - permet le mode Portainer SEUL)
+      - PORTAINER_URL=${PORTAINER_URL:-}
+      - PORTAINER_API_KEY=${PORTAINER_API_KEY:-}
+      - PORTAINER_ENDPOINT_ID=${PORTAINER_ENDPOINT_ID:-1}
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

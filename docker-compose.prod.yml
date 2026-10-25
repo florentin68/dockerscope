@@ -1,0 +1,30 @@
+services:
+  updater:
+    image: ghcr.io/florentin68/repository:latest
+    ports:
+      - target: 3001
+        published: ${APP_PORT:-3000}
+        protocol: tcp
+        mode: ingress
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      PORTAINER_URL: ${PORTAINER_URL:-}
+      PORTAINER_API_KEY: ${PORTAINER_API_KEY:-}
+      PORTAINER_ENDPOINT_ID: ${PORTAINER_ENDPOINT_ID:-1}
+      DOCKERHUB_USERNAME: ${DOCKERHUB_USERNAME:-}
+      DOCKERHUB_PASSWORD: ${DOCKERHUB_PASSWORD:-}
+      DOCKERHUB_TOKEN: ${DOCKERHUB_TOKEN:-}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      GITLAB_TOKEN: ${GITLAB_TOKEN:-}
+      QUAY_TOKEN: ${QUAY_TOKEN:-}
+      TELEGRAM_ENABLED: ${TELEGRAM_ENABLED:-false}
+      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      GOTIFY_ENABLED: ${GOTIFY_ENABLED:-false}
+      GOTIFY_URL: ${GOTIFY_URL:-}
+      GOTIFY_TOKEN: ${GOTIFY_TOKEN:-}
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any

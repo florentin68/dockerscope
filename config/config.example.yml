@@ -1,0 +1,76 @@
+# ============================================
+# Configuration Docker Services Updater - Exemple
+# ============================================
+# Ce fichier contient TOUTES les configurations.
+# Copiez ce fichier en config.yml pour l'utiliser.
+# Les valeurs ici priment sur les variables d'environnement.
+# Pour les variables d'environnement, utilisez le fichier .env
+
+portainer:
+  # URL de votre instance Portainer
+  url: "https://portainer.your-domain.com"
+  # Clé API ou Access Token de votre compte Portainer
+  api_key: "ptr_your_api_key_here"
+  # ID de l'endpoint Portainer (par défaut: 1)
+  endpoint_id: 1
+
+docker_hub:
+  # Authentification Docker Hub (recommandé pour éviter les limites de rate)
+  username: "your_dockerhub_username"
+  password: ""  # Optionnel si vous utilisez un token
+  token: "dckr_pat_your_token_here"
+
+# ============================================
+# Tokens pour autres registries (optionnels)
+# ============================================
+registries:
+  github:
+    # Token GitHub pour accéder aux registries GHCR
+    token: "ghp_your_github_token_here"
+  gitlab:
+    # Token GitLab pour accéder aux registries GitLab
+    token: "your_gitlab_token_here"
+  quay:
+    # Token Quay.io pour accéder au registry Quay
+    token: "your_quay_token_here"
+
+# ============================================
+# Configuration des notifications
+# ============================================
+notifications:
+  telegram:
+    # Activer les notifications Telegram
+    enabled: false
+    # Token bot Telegram (obtenu via @BotFather)
+    token: "123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
+    # ID du chat ou du groupe (peut être négatif pour les groupes)
+    chat_id: -1001234567890
+    # Mode de parsing du message (HTML ou Markdown)
+    parse_mode: "HTML"
+  
+  gotify:
+    # Activer les notifications Gotify
+    enabled: false
+    # URL de votre instance Gotify
+    url: "https://gotify.your-domain.com"
+    # Token d'application Gotify
+    token: "your_gotify_token_here"
+    # Priorité des notifications (1-10, 5 par défaut)
+    priority: 5
+
+# ============================================
+# Paramètres de l'application
+# ============================================
+settings:
+  # Intervalle de vérification des mises à jour (en millisecondes)
+  # 86400000 = 1 jour (par défaut)
+  # 3600000 = 1 heure
+  # 60000 = 1 minute
+  # 30000 = 30 secondes
+  check_interval: 86400000
+  
+  # Cooldown entre les notifications (en millisecondes)
+  # Empêche l'envoi de trop de notifications pour la même mise à jour
+  # 3600000 = 1 heure (par défaut)
+  # 1800000 = 30 minutes
+  notification_cooldown: 3600000
