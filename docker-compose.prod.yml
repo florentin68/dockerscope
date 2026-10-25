@@ -1,6 +1,6 @@
 services:
   updater:
-    image: ghcr.io/florentin68/repository:latest
+    image: ghcr.io/florentin68/dockerscope:latest
     ports:
       - target: 3001
         published: ${APP_PORT:-3000}

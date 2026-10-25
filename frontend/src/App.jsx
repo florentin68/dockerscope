@@ -46,6 +46,7 @@ import {
   Dns as DnsIcon
 } from '@mui/icons-material';
 import SettingsModal from './components/SettingsModal.jsx';
+import DockScopeLogo from './components/DockScopeLogo.jsx';
 
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
@@ -324,13 +325,13 @@ const App = () => {
     <Box sx={{ p: 3, maxWidth: 1400, margin: 'auto' }}>
       <Box sx={{ mb: 4 }}>
         <Box display="flex" alignItems="center" gap={2} mb={1}>
-          <SystemUpdateIcon sx={{ color: '#1976d2', fontSize: '3rem' }} />
+          <DockScopeLogo size={64} />
           <Box>
             <Typography variant="h3" component="h1">
-              Gestionnaire de Services Docker
+              DockScope
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              Listez vos services/containers Docker et vérifiez les mises à jour disponibles
+              Surveillez vos services Docker et repérez les mises à jour disponibles
             </Typography>
           </Box>
         </Box>

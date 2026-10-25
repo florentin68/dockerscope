@@ -1,4 +1,6 @@
-# Docker Services Updater
+# DockScope
+
+Surveillez vos services Docker et repérez les mises à jour disponibles.
 
 Une application web pour lister vos services/containers Docker et vérifier les mises à jour disponibles sur les images utilisées. **Avec support pour l'authentification Docker Hub et l'intégration Portainer !**
 
