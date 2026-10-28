@@ -1,4 +1,4 @@
-FROM node:24-alpine AS frontend-build
+FROM node:26-alpine AS frontend-build
 
 WORKDIR /build/frontend
 COPY frontend/package*.json ./
@@ -8,7 +8,7 @@ COPY frontend/src ./src
 COPY frontend/index.html frontend/vite.config.mjs ./
 RUN npm run build
 
-FROM node:24-alpine AS runtime
+FROM node:26-alpine AS runtime
 
 ENV NODE_ENV=production \
     PORT=3001
